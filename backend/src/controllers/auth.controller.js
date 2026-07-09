@@ -1,7 +1,8 @@
 
 const userModel = require("../models/userModel.js");
-const crypto = require("crypto");
+// const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 const registerController = async (req, res) => {
     const {userName, email, password, bio, profilePic, coverPic} = req.body;
@@ -17,7 +18,7 @@ const registerController = async (req, res) => {
             : "by Email"
         )})
     }
-    const hashedPassword = crypto.createHash("sha256").update(password).digest("hex");
+    const hashedPassword = await bcrypt.hash(password, 10);
     // res.status(201).json({message: "User created successfully", user: newUser})
 
     const newUser = await userModel.create({
@@ -33,7 +34,7 @@ const registerController = async (req, res) => {
         process.env.JWT_SECRET,
         {expiresIn: "1d"}
     )
-    res.cookie("token", token, {httpOnly: true});
+    res.cookie("token", token);
     res.status(201).json({
         message: "User created and logged in successfully",
         user: newUser.userName,
@@ -56,8 +57,8 @@ const loginController = async (req, res) => {
     if(!existingUser){
         return res.status(404).json({message: "User not found"})
     }
-    const hashedPassword = crypto.createHash("sha256").update(password).digest("hex");
-    if (existingUser.password !== hashedPassword){
+    const isPasswordMatch = await bcrypt.compare(password, existingUser.password);
+    if (!isPasswordMatch){
         return res.status(401).json({message: "Invalid credentials"})
     }
     const token = jwt.sign(
