@@ -30,7 +30,8 @@ const registerController = async (req, res) => {
         password: hashedPassword
     })
     const token = jwt.sign(
-        {userId: newUser._id},
+        {userId: newUser._id,
+        userName: newUser.userName},
         process.env.JWT_SECRET,
         {expiresIn: "1d"}
     )
@@ -62,7 +63,8 @@ const loginController = async (req, res) => {
         return res.status(401).json({message: "Invalid credentials"})
     }
     const token = jwt.sign(
-        {userId: existingUser._id},
+        {userId: existingUser._id,
+        userName: existingUser.userName},
         process.env.JWT_SECRET,
         {expiresIn: "1d"}
     )

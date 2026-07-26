@@ -1,8 +1,13 @@
 const express = require("express");
-const router = express.Router();
+const postRouter = express.Router();
 const postController = require("../controllers/post.controller.js");
 const multer = require("multer");
+const userAuthorization = require("../middleware/auth.middleware.js");
 const upload = multer({storage: multer.memoryStorage()});
 
-router.post("/create", upload.single("imgURL"), postController.createpostController);
-module.exports = router;
+postRouter.post("/create", upload.single("imgURL"),userAuthorization, postController.createPostController);
+postRouter.get("/all",userAuthorization, postController.getAllPostsController);
+postRouter.get("/details/:postId",userAuthorization, postController.getPostDetailsController);
+postRouter.post("/like/:postId",userAuthorization,postController.likeThePostController)
+postRouter.post("/dislike/:postId",userAuthorization,postController.dislikeThePostController)
+module.exports = postRouter;
