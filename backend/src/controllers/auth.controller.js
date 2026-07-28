@@ -36,6 +36,7 @@ const registerController = async (req, res) => {
         {expiresIn: "1d"}
     )
     res.cookie("token", token);
+    
     res.status(201).json({
         message: "User created and logged in successfully",
         user: newUser.userName,
@@ -78,6 +79,7 @@ const loginController = async (req, res) => {
         coverPic: existingUser.coverPic,
         token
     });
+    console.log("loggedinnnnnn")
 
 }
 
