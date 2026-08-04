@@ -55,7 +55,7 @@ const loginController = async (req, res) => {
             {userName:userName},
             {email:email}   
         ]
-    })
+    }).select("+password")
     if(!existingUser){
         return res.status(404).json({message: "User not found"})
     }
@@ -79,11 +79,28 @@ const loginController = async (req, res) => {
         coverPic: existingUser.coverPic,
         token
     });
-    console.log("loggedinnnnnn")
+}
+const getmeController = async(req,res)=>{
+    const userId= req.user.userId
+    const userdata = await userModel.findById(userId)
+    if(!userdata){
+        return res.status(404).json({message: 'User not found'})
+    }
+    res.status(200).json({
+        message: 'user fetched successfully',
+        user:{
+            user:userdata.userName,
+            email: userdata.email,
+            bio: userdata.bio,
+            profilePic: userdata.profilePic,
+            coverPic: userdata.coverPic,
+        }
+    })
 
 }
 
 module.exports =  authController = {
     registerController,
-    loginController
+    loginController,
+    getmeController
 };

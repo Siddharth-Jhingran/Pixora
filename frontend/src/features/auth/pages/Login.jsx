@@ -1,23 +1,35 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../styles/styles.scss";
 import { Link } from "react-router";
 import axios from "axios";
 import { useState } from "react";
+import useAuth from "../Hooks/useAuth";
+import { useNavigate } from "react-router";
+
 
 const Login = () => {
   const [userName, setuserName] = useState("")
   const [password, setpassword] = useState("")
+  const {handleLogin, loading} = useAuth()
+  const navigate = useNavigate()
+
+  if (loading){
+    return <h1>Loading.......</h1>
+  }
+
 
   async function submitHandler(e){
     e.preventDefault();
-    await axios.post('http://localhost:3000/api/auth/login',{
-      userName,
-      password
-    },{withCredentials:true})
+    await handleLogin(userName, password)
+    .then(res=>{
+      console.log(res)
+      navigate('/')
+    })
   }
   return (
     <>
-      <main>
+      <main className="loginPage">
+        <div className="loginContainer">
         <h1>Login</h1>
         <form action="" onSubmit={submitHandler}>
           <input required onChange={(e)=>{setuserName(e.target.value)}} type="text" placeholder="Enter username" />
@@ -30,6 +42,7 @@ const Login = () => {
             Registration
           </Link>
         </p>
+        </div>
       </main>
     </>
   );
