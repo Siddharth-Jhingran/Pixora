@@ -10,10 +10,10 @@ export default function Feed() {
   const { feed, handleGetFeed, loading } = usePost();
   const navigate = useNavigate();
 
-  const isUserLoggedIn = Cookies.get("token")
-  if(!isUserLoggedIn){
-    navigate("/login")
-  }
+  // const isUserLoggedIn = Cookies.get("token")
+  // if(!isUserLoggedIn){
+  //   navigate("/login")
+  // }
 
   useEffect(() => {
     handleGetFeed();
