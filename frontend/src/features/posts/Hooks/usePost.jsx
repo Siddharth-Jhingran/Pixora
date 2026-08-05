@@ -14,7 +14,6 @@ export const usePost = () => {
         try{
             const response = await getfeed()
             setFeed(response.feed.reverse())
-           
         }
         catch(err){
             throw err

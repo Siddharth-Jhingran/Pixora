@@ -7,7 +7,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 
-    allowedOrigins = ["https://pixora-azure-seven.vercel.app/", "http://localhost:5173"]
+    allowedOrigins = ["https://pixora-azure-seven.vercel.app", "http://localhost:5173"]
 
 
 
