@@ -7,7 +7,11 @@ app.use(cookieParser());
 app.use(express.json());
 
 
-    allowedOrigins = ["https://pixora-azure-seven.vercel.app", "http://localhost:5173"]
+const allowedOrigins = [
+  process.env.FRONTEND_ORIGIN,
+  "https://pixora-azure-seven.vercel.app",
+  "http://localhost:5173",
+].filter(Boolean);
 
 
 
@@ -20,7 +24,7 @@ app.use(
         return callback(null, true);
       }
 
-      callback(new Error("CORS not allowed"));
+      return callback(new Error("CORS not allowed"));
     },
     credentials: true,
   })

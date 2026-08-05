@@ -3,9 +3,17 @@ import { Posts } from "../components/Posts";
 import "../styles/styles.scss";
 import { useEffect } from "react";
 import { usePost } from "../Hooks/usePost";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router"; 
 
 export default function Feed() {
   const { feed, handleGetFeed, loading } = usePost();
+  const navigate = useNavigate();
+
+  const isUserLoggedIn = Cookies.get("token")
+  if(!isUserLoggedIn){
+    navigate("/login")
+  }
 
   useEffect(() => {
     handleGetFeed();
