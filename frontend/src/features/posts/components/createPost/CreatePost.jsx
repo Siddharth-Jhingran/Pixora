@@ -3,6 +3,7 @@ import "./createPost.scss";
 import { RiAddLargeLine } from "@remixicon/react";
 import { usePost } from "../../Hooks/usePost";
 import { useNavigate } from "react-router";
+import { PixoraSkeleton } from "../../../Skeleton/PixoraSkeleton";
 
 
 export const CreateThePost = () => {
@@ -21,7 +22,8 @@ export const CreateThePost = () => {
     }
   };
   if(loading){
-    return(<main><h2>Loading...</h2></main>)
+    // return(<main><h2>Loading...</h2></main>)
+    return <PixoraSkeleton />
   }
 
   // Handle form submission

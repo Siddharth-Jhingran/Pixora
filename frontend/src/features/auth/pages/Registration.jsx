@@ -14,6 +14,15 @@ const Registration = () => {
   const navigate = useNavigate();
 
   if (loading) {
+    return (
+      // <main>
+        <img
+          className="emptyState"
+          src="/write_Is_Loading_at_the.gif"
+          alt="No posts available"
+        />
+      // </main>
+    );
   }
 
   async function submitHandler(e) {

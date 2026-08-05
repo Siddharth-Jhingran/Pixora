@@ -19,6 +19,13 @@ body {
   background-color: #04050b;
   color: #f7f8ff;
 }
+.emptyState {
+  display: block;
+  margin: 0 auto;
+  width:90vw;
+  height: auto;
+  object-fit: cover;
+}
 
 button,
 input {

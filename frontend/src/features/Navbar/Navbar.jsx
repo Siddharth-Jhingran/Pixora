@@ -2,6 +2,7 @@ import React from 'react'
 import './style.scss'
 import { useNavigate } from 'react-router'
 import useAuth from '../auth/Hooks/useAuth';
+import { RiAddBoxLine, RiUserLine } from '@remixicon/react';
 
 export const Navbar = () => {
   const navigate = useNavigate();
@@ -15,16 +16,16 @@ export const Navbar = () => {
   return (
     <header className="feedHeader">
       <div className="brandBlock">
-        <div className="brandBadge">P</div>
+        <div className="brandBadge"><img src="https://ik.imagekit.io/wbbydpgjl/PIXORA_LOGO.png" alt="" /></div>
         <div>
           <h1>Pixora</h1>
-          <p>Curating your next favorite moment</p>
+          <p className="brandDescription">Curating your next favorite moment</p>
         </div>
       </div>
       <div className="headerActions">
-        {user && <button onClick={() => navigate('/create')}>Create Post</button>}
+        {user && <button onClick={() => navigate('/create')}><RiAddBoxLine className="authLogo" /><span className="authText">Create Post</span></button>}
         <div>
-          {user ? <button onClick={handleLogout}>Log Out</button> : <button onClick={() => navigate('/login')}>Log In</button>}
+          {user ? <button onClick={handleLogout}><RiUserLine className="authLogo" /><span className="authText">Log Out</span></button> : <button onClick={() => navigate('/login')}><RiUserLine className="authLogo" /><span className="authText">Log In</span></button>}
         </div>
       </div>
     </header>

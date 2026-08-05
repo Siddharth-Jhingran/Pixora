@@ -5,6 +5,7 @@ import axios from "axios";
 import { useState } from "react";
 import useAuth from "../Hooks/useAuth";
 import { useNavigate } from "react-router";
+import { PixoraSkeleton } from "../../Skeleton/PixoraSkeleton";
 
 
 const Login = () => {
@@ -14,7 +15,8 @@ const Login = () => {
   const navigate = useNavigate()
 
   if (loading){
-    return <h1>Loading.......</h1>
+    // return  <img className="emptyState" src="/write_Is_Loading_at_the.gif" alt="No posts available" />
+    return <PixoraSkeleton />
   }
 
 

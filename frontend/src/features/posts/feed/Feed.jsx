@@ -5,15 +5,17 @@ import { useEffect } from "react";
 import { usePost } from "../Hooks/usePost";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router"; 
+import useAuth from "../../auth/Hooks/useAuth";
+import { PixoraSkeleton } from "../../Skeleton/PixoraSkeleton";
 
 export default function Feed() {
   const { feed, handleGetFeed, loading } = usePost();
   const navigate = useNavigate();
+  const {user} = useAuth();
 
-  // const isUserLoggedIn = Cookies.get("token")
-  // if(!isUserLoggedIn){
-  //   navigate("/login")
-  // }
+  if(!user){
+    navigate("/login")
+  }
 
   useEffect(() => {
     handleGetFeed();
@@ -21,12 +23,13 @@ export default function Feed() {
 
   if (loading || !feed) {
     return (
-      <main className="feedPage">
-        <section className="feed">
+      // <main className="feedPage">
+        // <section className="feed">
         
-          <div className="emptyState">Loading your vibrant feed…</div>
-        </section>
-      </main>
+          // <img className="emptyState" src="/write_Is_Loading_at_the.gif" alt="No posts available" />
+        // </section>
+      // </main>
+      <PixoraSkeleton />
     );
   }
 
