@@ -1,10 +1,23 @@
 import { useState, createContext, useEffect } from "react";
-import { register, login, getMe } from "./services/auth.api";
+import { register, login, getMe, logout } from "./services/auth.api";
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setuser] = useState(null);
   const [loading, setloading] = useState(false);
+
+  useEffect(() => {
+    async function restoreSession() {
+      try {
+        const response = await getMe();
+        setuser(response.user);
+      } catch {
+        setuser(null);
+      }
+    }
+
+    restoreSession();
+  }, []);
 
   async function handleRegister(userName, email, password) {
     setloading(true);
@@ -29,9 +42,14 @@ export function AuthProvider({ children }) {
       setloading(false);
     }
   }
+
+  async function handleLogout() {
+    await logout();
+    setuser(null);
+  }
   return (
     <AuthContext.Provider
-      value={{ user, loading, handleLogin, handleRegister }}
+      value={{ user, loading, handleLogin, handleRegister, handleLogout }}
     >
       {children}
     </AuthContext.Provider>

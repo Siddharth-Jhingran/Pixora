@@ -9,5 +9,6 @@ const userAuthorization = require("../middleware/auth.middleware.js");
 authrouter.post("/register", authController.registerController);
 authrouter.post("/login", authController.loginController);
 authrouter.get('/get-me',userAuthorization, authController.getmeController)
+authrouter.post('/logout', authController.logoutController)
 
 module.exports = authrouter;

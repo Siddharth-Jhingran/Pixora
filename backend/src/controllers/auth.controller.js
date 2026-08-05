@@ -8,7 +8,6 @@ const authCookieOptions = {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    maxAge: 24 * 60 * 60 * 1000,
 };
 
 const registerController = async (req, res) => {
@@ -42,7 +41,7 @@ const registerController = async (req, res) => {
         process.env.JWT_SECRET,
         {expiresIn: "1d"}
     )
-    res.cookie("token", token, authCookieOptions);
+    res.cookie("token", token, { ...authCookieOptions, maxAge: 24 * 60 * 60 * 1000 });
     
     res.status(201).json({
         message: "User created and logged in successfully",
@@ -76,7 +75,7 @@ const loginController = async (req, res) => {
         process.env.JWT_SECRET,
         {expiresIn: "1d"}
     )
-    res.cookie("token", token, authCookieOptions);
+    res.cookie("token", token, { ...authCookieOptions, maxAge: 24 * 60 * 60 * 1000 });
     res.status(200).json({
         message: "User logged in successfully",
         user: existingUser.userName,
@@ -106,8 +105,14 @@ const getmeController = async(req,res)=>{
 
 }
 
+const logoutController = (req, res) => {
+    res.clearCookie("token", authCookieOptions);
+    res.status(200).json({ message: "Logged out successfully" });
+}
+
 module.exports =  authController = {
     registerController,
     loginController,
-    getmeController
+    getmeController,
+    logoutController
 };
