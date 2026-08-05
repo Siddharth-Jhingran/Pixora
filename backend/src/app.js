@@ -6,11 +6,25 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json());
 
-app.use(cors({
-    credentials: true,
-    origin:"https://pixora-azure-seven.vercel.app/"
-}))
 
+    allowedOrigins = ["https://pixora-azure-seven.vercel.app/", "http://localhost:5173"]
+
+
+
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      callback(new Error("CORS not allowed"));
+    },
+    credentials: true,
+  })
+);
 
 
 //defination
