@@ -12,7 +12,7 @@ export const Posts = ({ user, post }) => {
     .slice(0, 2)
     .map((part) => part[0]?.toUpperCase() || "")
     .join("");
-  const likeCount = post?.likesCount || 128;
+  const likeCount = post?.likesCount ?? 0;
   const caption = post?.caption || "A fresh moment from the Pixora community.";
 
   return (

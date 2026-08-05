@@ -23,7 +23,8 @@ export const Navbar = () => {
             </div>
           </div>
           <div className="headerActions">
-            <button  onClick={() =>{navigate("/create")}}>✨ Create Post</button>
+            {isTokenExists ? <button  onClick={() =>{navigate("/create")}}>✨ Create Post</button> : ""}
+            
             <div>
               {isTokenExists ? <button onClick={handleLogout}>Log Out</button> : <button onClick={()=>{navigate("/login")}}>Log In</button>}
             </div>

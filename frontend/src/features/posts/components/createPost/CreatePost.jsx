@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 
 
 export const CreateThePost = () => {
-  const { handleCreatePost, loading } = usePost();
+  const { handleCreatePost, loading, handleGetFeed } = usePost();
   const [imageURL, setImageURL] = useState(null);
   const [caption, setCaption] = useState("");
   const fileInputRef = useRef(null);
@@ -25,11 +25,12 @@ export const CreateThePost = () => {
   }
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     event.preventDefault(); // Prevents page reload on form submit
-    handleCreatePost(fileInputRef.current.files[0], caption);
+    await handleCreatePost(fileInputRef.current.files[0], caption);
     navigate("/"); // Redirect to the feed page after post creation
     // Send your form data to API/backend here...
+    await handleGetFeed() // Refresh the feed after creating a post
   };
 
   // Handle form reset

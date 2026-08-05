@@ -1,5 +1,5 @@
 import { createPost, dislikeThePost, getfeed, likeThePost } from "../services/post.api";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { PostContext } from "../post.context";
 
 import React from 'react'
@@ -36,13 +36,23 @@ export const usePost = () => {
 
     async function handleLikePost(postId){
         const response = await likeThePost(postId)
-        setFeed(feed.map((post) => (post._id === postId ? response.data : post)))
+        setFeed((currentFeed) => currentFeed?.map((post) => (
+            post._id === postId
+                ? { ...post, isLiked: response.isLiked, likesCount: response.likesCount }
+                : post
+        )))
     }
 
     async function handleDislikePost(postId){
         const response = await dislikeThePost(postId)
-        setFeed(feed.map((post) => (post._id === postId ? response.data : post)))
+        setFeed((currentFeed) => currentFeed?.map((post) => (
+            post._id === postId
+                ? { ...post, isLiked: response.isLiked, likesCount: response.likesCount }
+                : post
+        )))
+
     }
+    // useEffect(()=>{handleGetFeed()},[feed])
 
     return { post, feed, loading, handleGetFeed, handleCreatePost, handleLikePost, handleDislikePost }
 

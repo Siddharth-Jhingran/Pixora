@@ -78,11 +78,12 @@ async function likeThePostController(req, res){
         return res.status(409).json({message: "You already liked this post."})
     }
 
-    const likeThePost = await likesModel.create({
+    await likesModel.create({
         post:post,
         user:user
     })
-    res.status(201).json({message: "You liked this post"})
+    const likesCount = await likesModel.countDocuments({ post });
+    res.status(201).json({ message: "You liked this post", postId: post, isLiked: true, likesCount })
 }
 
 async function dislikeThePostController(req, res){
@@ -101,11 +102,12 @@ async function dislikeThePostController(req, res){
         return res.status(404).json({message: "You didn't like this post."})
     }
 
-    const dislike= await likesModel.findOneAndDelete({
+    await likesModel.findOneAndDelete({
         post:post,
         user:user
     })
-    res.status(201).json({message:"You disliked the post."})
+    const likesCount = await likesModel.countDocuments({ post });
+    res.status(200).json({ message:"You disliked the post.", postId: post, isLiked: false, likesCount })
 }
 
 async function getfeedController(req,res){
@@ -118,7 +120,8 @@ async function getfeedController(req,res){
             user:userName
             
         })
-        post.isLiked= isLiked
+        post.isLiked = Boolean(isLiked)
+        post.likesCount = await likesModel.countDocuments({ post: post._id })
 
         return post
 
