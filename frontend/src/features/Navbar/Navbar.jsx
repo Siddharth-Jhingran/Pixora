@@ -15,7 +15,7 @@ export const Navbar = () => {
 
   return (
     <header className="feedHeader">
-      <div className="brandBlock">
+      <div className="brandBlock" onClick={() => navigate('/')}>
         <div className="brandBadge"><img src="https://ik.imagekit.io/wbbydpgjl/PIXORA_LOGO.png" alt="" /></div>
         <div>
           <h1>Pixora</h1>
