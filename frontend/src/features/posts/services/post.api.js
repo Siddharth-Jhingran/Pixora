@@ -28,3 +28,8 @@ export async function dislikeThePost(postId){
     const response = await api.post(`/dislike/${postId}`)
     return response.data
 }
+
+export async function userAllPosts(){
+    const response = await api.get('/all')
+    return response.data
+}

@@ -45,13 +45,14 @@ const registerController = async (req, res) => {
     
     res.status(201).json({
         message: "User created and logged in successfully",
-        user: newUser.userName,
-        email: newUser.email,
-        bio: newUser.bio,
-        profilePic: newUser.profilePic,
-        coverPic: newUser.coverPic,
-        
-        }); 
+        user: {
+            userName: newUser.userName,
+            email: newUser.email,
+            bio: newUser.bio,
+            profilePic: newUser.profilePic,
+            coverPic: newUser.coverPic,
+        },
+    }); 
 }
 
 const loginController = async (req, res) => {
@@ -78,11 +79,13 @@ const loginController = async (req, res) => {
     res.cookie("token", token, { ...authCookieOptions, maxAge: 24 * 60 * 60 * 1000 });
     res.status(200).json({
         message: "User logged in successfully",
-        user: existingUser.userName,
-        email: existingUser.email,
-        bio: existingUser.bio,
-        profilePic: existingUser.profilePic,
-        coverPic: existingUser.coverPic,
+        user: {
+            userName: existingUser.userName,
+            email: existingUser.email,
+            bio: existingUser.bio,
+            profilePic: existingUser.profilePic,
+            coverPic: existingUser.coverPic,
+        },
         token
     });
 }
@@ -95,7 +98,7 @@ const getmeController = async(req,res)=>{
     res.status(200).json({
         message: 'user fetched successfully',
         user:{
-            user:userdata.userName,
+            userName:userdata.userName,
             email: userdata.email,
             bio: userdata.bio,
             profilePic: userdata.profilePic,
